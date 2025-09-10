@@ -1,0 +1,71 @@
+add 1 to a number represented by linked list
+
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public ListNode rev(ListNode head)
+    {
+        ListNode cur=head;
+        ListNode prev=null;
+        ListNode next=head;
+        while(next!=null)
+        {
+            next=cur.next;
+            cur.next=prev;
+            prev=cur;
+            cur=next;
+        }
+        return prev;
+    }
+    public ListNode addOne(ListNode head) {
+        
+        ListNode newhead=rev(head);
+        ListNode prev=newhead;
+        ListNode cur=null;
+        int car=0;
+        int sum=0;
+        while(prev!=null)
+        {
+            if(prev==newhead)
+            sum=prev.val+1+car;
+            else
+            sum=prev.val+car;
+            if(sum==10)
+            {
+                car=1;
+                sum=0;
+            }
+            prev.val=sum;
+            cur=prev;
+            prev=prev.next;
+
+        }
+        if(car!=0)
+        {
+            cur.next=new ListNode(car);
+        }
+        newhead=rev(newhead);
+        return newhead;
+    }
+}
